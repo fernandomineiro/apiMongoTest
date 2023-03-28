@@ -3,7 +3,11 @@ const Dats = db.dates;
 
 
 exports.create = (req, res) => {
- 
+
+ if (!req.body.title || !req.body.dateHors || req.body.published) {
+    res.status(400).send({ message: "Existe algum campo vazio!" });
+    return;
+  }
 
   const date = new Dats({
     journedHours: req.body.journedHours,
@@ -28,6 +32,11 @@ exports.create = (req, res) => {
 exports.update = (req, res) => {
   
   const id = req.params.id;
+ 
+  if (!req.body.title || !req.body.dateHors || req.body.published) {
+    res.status(400).send({ message: "Existe algum campo vazio!" });
+    return;
+  }
 
   Dats.findByIdAndUpdate(id, req.body)
     .then(data => {
